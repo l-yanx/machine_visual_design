@@ -67,29 +67,54 @@ def _resize(img: np.ndarray, spec: ResizeSpec, interpolation: str) -> np.ndarray
     return cv2.resize(img, (spec.width, spec.height), interpolation=interp)
 
 
-def gaussian_lowpass(img_float01: np.ndarray, sigma: float) -> np.ndarray:
-    if sigma <= 0:
-        raise ValueError("sigma must be > 0")
-    return cv2.GaussianBlur(img_float01, ksize=(0, 0), sigmaX=sigma, sigmaY=sigma, borderType=cv2.BORDER_REFLECT)
+def _make_lowpass_mask(h: int, w: int, radius: float) -> np.ndarray:
+    if radius <= 0:
+        raise ValueError("radius must be > 0")
+    cy = (h - 1) / 2.0
+    cx = (w - 1) / 2.0
+    yy, xx = np.ogrid[:h, :w]
+    dist2 = (yy - cy) ** 2 + (xx - cx) ** 2
+    return dist2 <= float(radius) ** 2
 
 
-def highpass_from(img_float01: np.ndarray, sigma: float) -> np.ndarray:
-    low = gaussian_lowpass(img_float01, sigma=sigma)
+def _lowpass_fft(img_float01: np.ndarray, radius: float) -> np.ndarray:
+    """
+    频域低通滤波：先 fft2，再乘圆形低通掩码，再 ifft2。
+    对三个通道一起做（在 H, W 维度上做 FFT）。
+    """
+    if img_float01.ndim != 3 or img_float01.shape[2] != 3:
+        raise ValueError("Expected HxWx3 image in [0,1] for FFT lowpass")
+    h, w, _ = img_float01.shape
+    mask = _make_lowpass_mask(h, w, radius).astype(np.float32)
+    mask = mask[:, :, None]  # broadcast to 3 channels
+
+    f = np.fft.fft2(img_float01, axes=(0, 1))
+    fshift = np.fft.fftshift(f, axes=(0, 1))
+    fshift_lp = fshift * mask
+    f_ishift = np.fft.ifftshift(fshift_lp, axes=(0, 1))
+    out = np.fft.ifft2(f_ishift, axes=(0, 1)).real
+    return out
+
+
+def _highpass_fft(img_float01: np.ndarray, radius: float) -> np.ndarray:
+    """
+    频域高通：原图减去同一半径的低通结果，相当于 A_high = A - lowpass(A).
+    """
+    low = _lowpass_fft(img_float01, radius=radius)
     return img_float01 - low
 
 
 def fuse_high_low(
     a_float01: np.ndarray,
     b_float01: np.ndarray,
-    sigma_low: float,
-    sigma_high: float,
+    radius: float,
     high_gain: float,
     b_gain: float,
 ) -> np.ndarray:
-    # low frequency from b
-    b_low = gaussian_lowpass(b_float01, sigma=sigma_low)
-    # high frequency from a
-    a_high = highpass_from(a_float01, sigma=sigma_high)
+    # low frequency from b in frequency domain
+    b_low = _lowpass_fft(b_float01, radius=radius)
+    # high frequency from a in frequency domain (same radius)
+    a_high = _highpass_fft(a_float01, radius=radius)
     return b_low * float(b_gain) + a_high * float(high_gain)
 
 
@@ -112,16 +137,11 @@ def main() -> int:
         help="Resize interpolation (default: area).",
     )
     p.add_argument(
-        "--sigma-low",
+        "--radius",
         type=float,
-        default=5.0,
-        help="Gaussian sigma for low-pass on B (default: 5.0). Bigger -> smoother/low-frequency.",
-    )
-    p.add_argument(
-        "--sigma-high",
-        type=float,
-        default=2.0,
-        help="Gaussian sigma to define high-pass on A via A - blur(A) (default: 2.0).",
+        required=True,
+        help="Radius (in pixels) that defines low-frequency region in the frequency domain. "
+        "Used both for low-pass on B and high-pass on A.",
     )
     p.add_argument(
         "--high-gain",
@@ -161,8 +181,7 @@ def main() -> int:
     fused = fuse_high_low(
         a,
         b,
-        sigma_low=args.sigma_low,
-        sigma_high=args.sigma_high,
+        radius=args.radius,
         high_gain=args.high_gain,
         b_gain=args.b_gain,
     )
@@ -171,8 +190,7 @@ def main() -> int:
     if out_path.suffix.lower() not in (".png", ".jpg", ".jpeg", ".bmp", ".tiff", ".tif", ".webp"):
         # 若 --out 是目录或没有扩展名，则在该路径下按参数写入 out_*.jpg
         out_name = (
-            f"out_{_fmt_float_for_name(args.sigma_low)}_"
-            f"{_fmt_float_for_name(args.sigma_high)}_"
+            f"out_{_fmt_float_for_name(args.radius)}_"
             f"{_fmt_float_for_name(args.high_gain)}_"
             f"{_fmt_float_for_name(args.b_gain)}.jpg"
         )

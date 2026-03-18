@@ -1,12 +1,21 @@
 # 高频/低频融合（A 高频 + B 低频）
 
-输入两张图片（分辨率可不同），先统一到同一分辨率，然后：
+## 文件架构
+- fuse_high_low.py 主程序
+- picture 处理数据与结果库
+- request 主要依赖
+- __pycache__
+- readme.md
 
-- A 取 **高频**：\(A_{high} = A - G_{\sigma_{high}}(A)\)
-- B 取 **低频**：\(B_{low} = G_{\sigma_{low}}(B)\)
-- 融合输出：\(Out = B_{low} + gain \cdot A_{high}\)
+输入两张图片（分辨率可不同），先统一到同一分辨率，然后在**频域**里做滤波与融合：
 
-其中 \(G_{\sigma}(\cdot)\) 是高斯模糊（低通）。
+- 对 A、B 分别做 2D FFT，得到频谱
+- 用**同一个半径 \(r\)** 构造圆形低通掩码：
+  - B 经过低通 → 得到 \(B_\text{low}(r)\)（只保留半径 \(r\) 内的低频）
+  - A 经过低通后再相减 → 得到 \(A_\text{high}(r) = A - A_\text{low}(r)\)
+- 融合输出：\(\text{Out} = b\_\text{gain} \cdot B_\text{low}(r) + \text{high\_gain} \cdot A_\text{high}(r)\)
+
+最后再做反 FFT 回到空域并裁剪到 \([0,1]\)。
 
 ## 安装
 
@@ -22,20 +31,26 @@ pip install -r requirements.txt
 python fuse_high_low.py \
   --a path/to/a.jpg \
   --b path/to/b.jpg \
-  --out out/fused.png \
+  --out out/ \
   --resize auto \
-  --sigma-low 4 \
-  --sigma-high 4 \
-  --high-gain 1.0
+  --radius 40 \
+  --high-gain 1.0 \
+  --b-gain 1.0
 ```
 
-### 参数建议
+当 `--out` 指向目录（或不带扩展名）时，会在该目录下输出：
+`out_<radius>_<high-gain>_<b-gain>.jpg`
 
-- `--sigma-low`: 越大越“只保留低频”（更平滑）。常用 4~12
-- `--sigma-high`: 定义“高频”的尺度。越小保留越细的纹理。常用 1~4
-- `--high-gain`: 高频叠加强度，过大可能出现过锐/溢出。常用 0.7~1.5
+### 参数
+
+- `--radius`: 频域圆形低通半径（单位：像素）。越大，B 的结构/中频保留越多。
+- `--high-gain`: 对 A 的高频部分的叠加强度。越大，A 的细节越明显。
+- `--b-gain`: 对 B 的低频基底的权重。\<1 会压低 B，让 A 更突出。
 
 ## 说明
 
-- 默认 `--resize auto` 会选择两张图中 **面积更大** 的那张作为目标分辨率，然后把另一张缩放过去。
-- 目前按 **彩色 BGR 三通道** 处理；如输入有 alpha 通道会被忽略。
+- 低频与高频都在**频域**完成：先 FFT，再乘以圆形掩码，然后 IFFT。
+
+## 实际效果
+- 实际测试效果在picture内，g1 g2采用空域滤波后相加，效果远不如g3中在频域里的效果明显。
+- 效果证明低通图像能量需要远小于高通图像能量时，融合后图片高频信息才明显。推测主要原因在于高通图像丢弃了大量的颜色等大面积视觉信息，所以需要处理后保留更多的能量。同时低通图像保留了大量的颜色等信息，足以让人注意到。最佳一组数据为g3/out_30_5_1.jpg
