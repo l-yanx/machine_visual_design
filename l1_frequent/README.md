@@ -14,7 +14,6 @@
   - B 经过低通 → 得到 \(B_\text{low}(r)\)（只保留半径 \(r\) 内的低频）
   - A 经过低通后再相减 → 得到 \(A_\text{high}(r) = A - A_\text{low}(r)\)
 - 融合输出：\(\text{Out} = b\_\text{gain} \cdot B_\text{low}(r) + \text{high\_gain} \cdot A_\text{high}(r)\)
-
 最后再做反 FFT 回到空域并裁剪到 \([0,1]\)。
 
 ## 安装
