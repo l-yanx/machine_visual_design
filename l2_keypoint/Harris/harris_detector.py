@@ -1,4 +1,4 @@
-"""Harris 角点检测与亚像素细化。"""
+"""Harris 角点检测：输出角点坐标与带角点标注的图像。"""
 
 from __future__ import annotations
 
@@ -8,18 +8,15 @@ import numpy as np
 
 def detect_harris_corners(
     gray: np.ndarray,
-    max_corners: int = 800,
-    quality_level: float = 0.01,
-    min_distance: float = 8.0,
+    max_corners: int = 1200,
+    quality_level: float = 0.005,
+    min_distance: float = 6.0,
     block_size: int = 3,
     k: float = 0.04,
 ) -> np.ndarray:
-    """
-    使用 goodFeaturesToTrack + Harris 响应（OpenCV 等价于 Shi-Tomasi 接口但启用 Harris）。
-    返回 float32 Nx2 角点坐标。
-    """
+    """使用 goodFeaturesToTrack(Harris) + cornerSubPix，返回 Nx2 float32。"""
     if gray.ndim != 2:
-        raise ValueError("gray 必须为单通道灰度图")
+        raise ValueError("gray must be single-channel image")
     corners = cv2.goodFeaturesToTrack(
         gray,
         maxCorners=max_corners,
@@ -37,10 +34,15 @@ def detect_harris_corners(
     return refined.astype(np.float32)
 
 
-def affine_apply_xy(M: np.ndarray, xy: np.ndarray) -> np.ndarray:
-    """2x3 仿射矩阵作用于 Nx2 点集，结果为 Nx2。"""
-    if xy.size == 0:
-        return xy.copy()
-    ones = np.ones((xy.shape[0], 1), dtype=np.float64)
-    hom = np.hstack([xy.astype(np.float64), ones])
-    return (hom @ M.T).astype(np.float32)
+def draw_corners(
+    image_bgr: np.ndarray,
+    corners_xy: np.ndarray,
+    radius: int = 3,
+    color: tuple[int, int, int] = (0, 255, 255),
+) -> np.ndarray:
+    """返回带角点绘制结果的新图像。"""
+    out = image_bgr.copy()
+    for x, y in corners_xy:
+        p = (int(round(float(x))), int(round(float(y))))
+        cv2.circle(out, p, radius, color, 1, lineType=cv2.LINE_AA)
+    return out

@@ -1,32 +1,77 @@
-# Harris 角点与描述子匹配示例
+# Harris 角点检测与匹配实验
 
-本目录演示：由 **A** 经仿射（旋转、平移、模糊）得到 **B**；对 **A、B 各自独立**做 Harris 角点检测；在角点邻域构造**强度直方图 + 梯度方向直方图**描述子；用 **Lowe 距离比**与可选**互最近邻**做相似度匹配；左右拼接并连线可视化。
+## 1. 主要工作
 
-## 文件说明
+本工程完成以下任务：
 
-| 文件 | 作用 |
-|------|------|
-| `harris_corner.py` | **角点检测**：`goodFeaturesToTrack` + Harris 响应，`cornerSubPix` 细化；`affine_apply_xy` 供其它实验使用。 |
-| `image_transform.py` | **合成 B**：从 A 得到同尺寸 B 及 A→B 仿射矩阵（本管线匹配**不**使用该矩阵）。 |
-| `corner_descriptors.py` | **描述子**：每个角点取正方形邻域，拼接归一化灰度强度直方图与梯度方向（0~π）直方图，再 L2 归一化。 |
-| `match_corners.py` | **匹配**：`match_by_descriptor_similarity`（距离比 + 可选互最近邻）；另保留 `match_by_affine_prediction`（仿射预测匹配，供对照）。 |
-| `run_harris_match.py` | **入口**：串联检测、描述子、匹配与可视化。 |
-| `requirements.txt` | `numpy`、`opencv-python`。 |
+- 对输入图像进行 Harris 角点检测；
+- 将图像 A 变换得到图像 B（旋转、平移、透视、模糊）；
+- 比较两种相似性匹配方式的效果，并将匹配上的角点连接可视化：
+  - 方式一：`ratio + mutual`（基础相似度匹配）
+  - 方式二：`ratio + RANSAC`（几何一致性过滤）
 
-## 运行方式
+## 2. 必要的包
+
+依赖见 `requirements.txt`：
+
+- `numpy>=1.20`
+- `opencv-python>=4.5`
+
+建议 Python 3 环境运行。
+
+安装方式：
 
 ```bash
-cd Harris
-python run_harris_match.py              # 无参：内置棋盘图
-python run_harris_match.py /path/to/img.png -o out.png
+pip install -r requirements.txt
 ```
 
-常用参数：`--seed`、`--ratio`、`--patch-radius`、`--no-mutual`、`--result-dir`。
+## 3. 每个 py 文件作用
 
-**Harris 角点**：`--quality-level`（越小角点越多，可试 `0.002`～`0.005` 看面部弱纹理）、`--min-distance`（越小越密）、`--max-corners`、`--block-size`。
+- `harris_detector.py`  
+Harris 角点检测与可视化绘制，输出角点坐标和带角点标注图。
+- `image_transformer.py`  
+负责图像变换：旋转、平移、透视映射、高斯模糊，输入 A 输出 B。
+- `match_and_stitch.py`  
+采用 `ratio + mutual` 进行角点匹配；将 A、B 拼接并连接匹配角点。
+- `match_and_stitch_ransac.py`  
+采用 `ratio + RANSAC` 进行匹配内点筛选；将 A、B 拼接并连接 RANSAC 内点匹配。
 
-## 说明
+## 4. 怎么运行工程
 
-匹配**不**使用合成时的真值仿射，仅靠邻域统计相似度；旋转较大时描述子对齐会变差，可适当增大 `--patch-radius` 或放宽 `--ratio` 做实验对比。
+在 `Harris` 目录下执行：
 
-人像上角点多集中在毛发、镜框等强边缘处、面颊相对少，是 Harris 对「角状结构」的定义所致；单靠调参无法让面部与头发「均匀」分布，若需要面部关键点应使用人脸检测/关键点模型。
+```bash
+# 方式一：ratio + mutual
+python3 match_and_stitch.py ../picture/cat1.jpg --result-dir result -o result/final_match.png
+
+# 方式二：ratio + RANSAC
+python3 match_and_stitch_ransac.py ../picture/cat1.jpg --result-dir result -o result/final_ransac.png
+```
+
+运行后会在 `result` 目录生成：
+
+- 角点图：`a1_corners*.png`、`b1_corners*.png`
+- 拼接匹配图：`final_match.png` 或 `final_ransac.png`
+
+常用参数（两种脚本基本一致）：
+
+- 变换参数：`--angle` `--tx` `--ty` `--perspective` `--blur-ksize` `--blur-sigma`
+- Harris 参数：`--max-corners` `--quality-level` `--min-distance` `--block-size` `--harris-k`
+- 匹配参数：`--patch-radius` `--ratio`
+- RANSAC 额外参数：`--ransac-thresh`
+
+## 5. 实验数据记录
+
+测试图像：`../picture/building.png`
+
+
+| 运行方式           | 命令                                                                                                          | 角点数 A | 角点数 B | 初始匹配数 | RANSAC 内点数 | 最终连线数 |
+| -------------- | ----------------------------------------------------------------------------------------------------------- | ----- | ----- | ----- | ---------- | ----- |
+| ratio + RANSAC | `python3 match_and_stitch_ransac.py ../picture/building.png --result-dir result -o result/final_ransac.png` | 812   | 668   | 31    | 19         | 19    |
+| ratio + mutual | `python3 match_and_stitch.py ../picture/building.png --result-dir result -o result/final_match.png`         | 812   | 668   | -     | -          | 19    |
+
+
+## 6. 总结
+
+本次实验使用 Harris 角点检测并对比了两种匹配策略。在 `building.png` 上，两种方法最终连线数相同，说明在该组参数与图像条件下，基础匹配已经较稳定；`ratio + RANSAC` 额外提供了几何一致性约束，能显式给出“初始匹配→内点”的筛选过程（31 → 19），可解释性更强，也更适合后续扩展到视角变化更大的场景。
+但是很明显，使用直方图做相似性匹配时匹配了错误的角点，出现了交叉连线；但是ransac匹配基本正确，精确率明显大于前者。
