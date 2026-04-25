@@ -1,0 +1,8 @@
+name: l3_bovw
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - scikit-learn
+  - opencv
