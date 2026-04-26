@@ -10,3 +10,6 @@
 
 /models/*
 !/models/.gitkeep
+
+# 训练产物
+/svm/*.pkl

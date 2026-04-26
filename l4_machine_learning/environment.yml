@@ -1,8 +1,5 @@
 # 重建：
-#   conda env create -f environment.yml
-#   conda activate insightface-fr
-#   bash setup_env.sh        # 写入激活脚本：禁用 user-site + 注册 CUDA 库路径
-# 仅 CPU：把 onnxruntime-gpu 与 nvidia-* 整段去掉，加 onnxruntime>=1.17 即可
+
 name: insightface-fr
 channels:
   - conda-forge
