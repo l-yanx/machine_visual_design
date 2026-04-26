@@ -1,0 +1,28 @@
+# 重建：
+#   conda env create -f environment.yml
+#   conda activate insightface-fr
+#   bash setup_env.sh        # 写入激活脚本：禁用 user-site + 注册 CUDA 库路径
+# 仅 CPU：把 onnxruntime-gpu 与 nvidia-* 整段去掉，加 onnxruntime>=1.17 即可
+name: insightface-fr
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - "numpy==2.2.6"
+    - "opencv-python-headless==4.10.0.84"
+    - "tqdm>=4.66"
+    - "onnx==1.16.2"
+    - "ml_dtypes==0.4.1"
+    # 强制从源码构建，让 cython 扩展按当前 numpy 重新编译
+    - "--no-binary=insightface"
+    - "insightface==0.7.3"
+    - "onnxruntime-gpu==1.23.2"
+    # CUDA 12 / cuDNN 9 运行时（onnxruntime-gpu 1.23 要求）
+    - "nvidia-cublas-cu12"
+    - "nvidia-cudnn-cu12"
+    - "nvidia-cuda-runtime-cu12"
+    - "nvidia-cuda-nvrtc-cu12"
+    - "nvidia-cufft-cu12"
+    - "nvidia-curand-cu12"

@@ -1,0 +1,12 @@
+# 忽略数据文件夹下的所有内容，但保留文件夹本身（通过 .gitkeep）
+/test/*
+!/test/.gitkeep
+
+/dataset/*
+!/dataset/.gitkeep
+
+/aligned_dataset/*
+!/aligned_dataset/.gitkeep
+
+/models/*
+!/models/.gitkeep
