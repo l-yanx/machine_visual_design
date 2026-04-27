@@ -1,7 +1,7 @@
 """
 3×3 分块、每块 Dense-SIFT + 共享 KMeans(100) 视觉词典；
-单图 9×K 维 L2 单位向量；每人物多图 L2-平均后再 L2 得原型。
-输出 label.npy、features.npy(人数×9K)、visual_vocab.npy(K×128)。
+单图 9×K 维 L2 单位向量；**库中每张图一行**，label[i] = 该图所属人名。
+输出 label.npy、features.npy(图片数×9K)、visual_vocab.npy(K×128)。
 """
 from __future__ import annotations
 
@@ -18,7 +18,6 @@ from bovw import (
     N_REGIONS,
     collect_sift_from_image_path,
     encode_image_spatial_bow,
-    l2_unit_vector,
     list_image_files,
     load_bgr,
     person_root_dirs,
@@ -106,25 +105,24 @@ def main() -> None:
 
     labels_out: list[str] = []
     features_rows: list[np.ndarray] = []
+    n_persons = 0
 
     for pdir in persons:
         imgs = list_image_files(pdir)
         if not imgs:
             continue
-        vecs: list[np.ndarray] = []
+        n_persons += 1
         for ip in imgs:
             bgr = load_bgr(ip)
             v = encode_image_spatial_bow(bgr, centers, k_words=k_vis)
             if v.shape[0] != N_REGIONS * k_vis:
                 print("单图特征维应为 9*K", file=sys.stderr)
                 sys.exit(1)
-            vecs.append(v.astype(np.float64))
-        proto = l2_unit_vector(np.mean(np.stack(vecs, axis=0), axis=0))
-        labels_out.append(pdir.name)
-        features_rows.append(proto)
+            labels_out.append(pdir.name)
+            features_rows.append(v.astype(np.float32, copy=False))
 
     if not labels_out:
-        print("无有效人物文件夹", file=sys.stderr)
+        print("无有效图像", file=sys.stderr)
         sys.exit(1)
 
     out.mkdir(parents=True, exist_ok=True)
@@ -136,7 +134,7 @@ def main() -> None:
     np.save(out / "features.npy", features_mat)
     np.save(out / "visual_vocab.npy", centers)
 
-    print("人物数:", len(labels_out))
+    print("人物数:", n_persons, " 图片数:", len(labels_out))
     print("每图块数×K:", N_REGIONS, "×", k_vis, "=> 特征维", N_REGIONS * k_vis)
     print("SIFT 维:", DESCRIPTOR_DIM, " 子块网格:", 5, "x", 5, "/ 区域")
     print("已写入:", out / "label.npy", out / "features.npy", out / "visual_vocab.npy")
