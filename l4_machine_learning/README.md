@@ -139,13 +139,13 @@ $$\text{sim}(q, g_i) = q \cdot g_i \in [-1, 1]$$
 
 为了**直观验证 ArcFace embedding 是否真的把不同人分得开**，`visualization/visualize.py` 把 5 个身份共 608 张脸的 512 维 embedding 先用 **PCA 压到 50 维**（保留 ≈ 97.4% 方差），再用 **t-SNE 投影到 2 维**做散点图：
 
-t-SNE 2D 散点图
+![t-SNE 2D 散点图](visualization/output/tsne_scatter.png)
 
 5 个身份各自形成**紧密、互不重叠的色团**——说明 ArcFace 把同一人的不同照片拉到了 embedding 空间的同一小邻域，把不同人推得很开，**类内方差远小于类间距离**。这正是后续无论用 cosine 还是 SVM 都能拿到接近 100% 准确率的根本原因。
 
 进一步，把所有样本两两余弦相似度画成热力图（按身份排序，使同身份样本相邻）：
 
-两两余弦相似度热力图
+![两两余弦相似度热力图](visualization/output/pairwise_heatmap.png)
 
 可以看到 **5 个对角块明显高亮**（块内 ≈ 0.6 ~ 1.0），块外区域偏暗（≈ 0.0 ~ 0.3）；这与「类内紧、类间松」的几何结论完全一致。
 
