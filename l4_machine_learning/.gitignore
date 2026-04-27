@@ -13,3 +13,9 @@
 
 # 训练产物
 /svm/*.pkl
+
+# 可视化输出（每次运行 visualization/visualize.py 生成）
+/visualization/output/*
+# README 中引用的两张展示图保留进 git
+!/visualization/output/tsne_scatter.png
+!/visualization/output/pairwise_heatmap.png
