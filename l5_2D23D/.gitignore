@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Data (images, resized images)
+data/
+
+# Generated results (features, matches, reconstructions, logs, visualizations)
+results/
+
+# Claude Code
+.claude/
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,36 @@
+camera:
+  fx_scale: 1.2
+  use_calibrated_intrinsics: false
+fusion:
+  outlier_nb_neighbors: 20
+  outlier_std_ratio: 2.0
+  voxel_size: 0.02
+image:
+  resize_width: 1000
+matching:
+  neighbor_range: 34
+  ratio_threshold: 0.75
+  strategy: sequential
+mvs:
+  depth_percentile_max: 95
+  depth_percentile_min: 5
+  depth_samples: 48
+  patch_size: 5
+  seed_pixel_radius: 20
+  source_view_num: 3
+  stride: 2
+  zncc_threshold: 0.5
+paths:
+  agent_record_dir: ./agent_message/agentwork_record
+  image_dir: ./data/image
+  results_dir: ./results
+ransac:
+  confidence: 0.999
+  essential_threshold: 1.0
+  min_inliers: 50
+sfm:
+  pnp_min_inliers: 25
+  reprojection_error_threshold: 8.0
+  triangulation_min_angle: 1.0
+sift:
+  max_features: 8000
