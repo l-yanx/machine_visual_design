@@ -1,0 +1,53 @@
+============================================================
+V2 Mesh Reconstruction Pipeline
+Start time: 2026-05-01 22:52:11
+============================================================
+
+[Step 1] Reading dense point cloud...
+  Path: ./results/dense/dense.ply
+  Points: 80,223
+  Has colors: True
+  Has normals: False
+  Bounds: [-6.332917982509969, -9.044825175902728, 0.6375562649297777] to [6.1323730846239926, 5.032275580937821, 14.534229228737516]
+
+[Step 2] Cleaning dense point cloud...
+  Before cleaning: 80,223 points
+  After statistical outlier removal: 76,852 points
+  After voxel downsample: 76,821 points
+  Saved: ./results/mesh/cleaned_dense.ply
+
+[Step 3] Estimating and orienting normals...
+  Normals estimated: True
+  Points: 76,821
+  Saved: ./results/mesh/cleaned_dense_with_normals.ply
+
+[Step 4] Poisson surface reconstruction...
+  Parameters: depth=8, scale=1.1, linear_fit=False
+  Raw mesh: 197,921 vertices, 396,980 triangles
+  After crop to bounds: 197,543 vertices, 396,198 triangles
+  Saved: ./results/mesh/mesh_poisson_raw.ply
+
+[Step 5] Mesh cleanup...
+  Cleaned mesh: 181,007 vertices, 364,862 triangles
+  Saved: ./results/mesh/mesh_cleaned.ply
+
+[Step 6] Mesh simplification...
+  Simplified: 364,862 → 99,999 triangles
+  Reduction ratio: 0.274
+  Saved: ./results/mesh/mesh_simplified.ply
+
+[Step 7] Exporting model files...
+  model.ply: OK
+  model.obj: OK
+  model.glb: OK
+
+============================================================
+Mesh Reconstruction Summary
+  Input dense points: 80,223
+  Cleaned points: 76,821
+  Raw mesh: 181,007 vertices, 364,862 triangles
+  Cleaned mesh: 181,007 vertices, 364,862 triangles
+  Final mesh: 48,853 vertices, 99,999 triangles
+  Total time: 5.4 seconds
+  Log file: ./results/logs/mesh_log.txt
+============================================================

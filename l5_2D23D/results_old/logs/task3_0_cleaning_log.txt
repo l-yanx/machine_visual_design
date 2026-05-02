@@ -1,0 +1,112 @@
+============================================================
+Task 3.0: Dense Point Cloud Quality Check & Cleaning
+Start: 2026-05-01 22:51:57
+============================================================
+Conda env: 3D_Reconstruction
+Input: results/dense/dense.ply
+Output dir: results/mesh
+
+[Step 1] Loading dense point cloud...
+  Path: /home/lyx/machine_visual/l5_2D23D/results/dense/dense.ply
+  Points: 80,223
+  Has colors: True
+  Has normals: False
+  NaN count: 0
+  Inf count: 0
+  Bounds: [-6.33291798 -9.04482518  0.63755626] → [ 6.13237308  5.03227558 14.53422923]
+
+[Step 2] Computing original point cloud statistics...
+--- Original Point Cloud ---
+  Number of points: 80,223
+  Bounding box min: (-6.3329, -9.0448, 0.6376)
+  Bounding box max: (6.1324, 5.0323, 14.5342)
+  Extent: (12.4653, 14.0771, 13.8967)
+  Centroid: (-0.1211, -0.1721, 5.5422)
+  Distance to centroid: mean=3.4700, std=1.7669, min=0.1787, max=10.8416
+  Color mean: (0.648, 0.634, 0.541)
+  Color std:  (0.209, 0.208, 0.258)
+  Color min:  (0.000, 0.004, 0.000)
+  Color max:  (1.000, 1.000, 0.976)
+  NN distance: mean=0.147706, median=0.116196, std=0.119938, min=0.003964, max=2.035802
+
+[Step 3] Removing NaN/Inf points...
+  Before: 80,223  After: 80,223  Removed: 0
+  Saved: results/mesh/dense_valid_only.ply
+
+[Step 4] Removing duplicate points...
+  Before: 80,223  After: 80,223  Removed: 0
+
+[Step 5] Color filtering: disabled in config
+
+[Step 6] Statistical outlier removal...
+  nb_neighbors=30  std_ratio=1.5
+  Before: 80,223  After: 73,781  Removed: 6,442
+  Saved: results/mesh/dense_statistical_cleaned.ply
+
+[Step 7] Radius outlier removal...
+  Estimated median NN distance: 0.101063
+  Computed radius: 0.252658 (scale=2.5)
+  Before: 73,781  After: 71,997  Removed: 1,784
+  Saved: results/mesh/dense_radius_cleaned.ply
+
+[Step 8] DBSCAN main cluster extraction...
+  Estimated median NN distance: 0.099560
+  Computed eps: 0.248899 (scale=2.5)
+  Clusters found: 75
+  Cluster sizes: [65840, 36, 18, 25, 24, 28, 21, 28, 21, 111, 57, 23, 177, 30, 20, 71, 68, 47, 36, 22, 31, 43, 39, 20, 24, 22, 22, 34, 40, 24, 41, 20, 29, 49, 73, 27, 35, 43, 34, 51, 120, 30, 172, 27, 29, 24, 20, 46, 26, 34, 38, 35, 21, 32, 20, 48, 23, 29, 30, 84, 293, 30, 20, 25, 44, 23, 14, 20, 43, 18, 24, 24, 20, 20, 21]
+  Before: 71,997  After: 65,840  Removed: 6,157
+  Saved: results/mesh/dense_dbscan_cleaned.ply
+
+[Step 9] Voxel downsampling...
+  Voxel size: 0.02
+  Before: 65,840  After: 60,728  Removed: 5,112
+  Saved: results/mesh/dense_voxel_downsampled.ply
+
+[Step 10] Normal estimation...
+  Estimated median NN distance: 0.091608
+  Computed radius: 0.274823 (scale=3.0)
+  Normals estimated: True
+  Saved: results/mesh/dense_with_normals.ply
+
+[Step 11] Exporting final cleaned point cloud...
+  Saved: results/mesh/dense_cleaned.ply
+  Final point count: 60,728
+
+[Step 12] Computing final point cloud statistics...
+--- Cleaned Point Cloud ---
+  Number of points: 60,728
+  Bounding box min: (-3.7530, -5.3707, 0.6376)
+  Bounding box max: (4.6577, 4.5876, 13.3239)
+  Extent: (8.4108, 9.9584, 12.6864)
+  Centroid: (-0.0182, 0.0909, 4.9254)
+  Distance to centroid: mean=2.8728, std=1.4992, min=0.0680, max=8.6070
+  Color mean: (0.646, 0.633, 0.549)
+  Color std:  (0.207, 0.207, 0.250)
+  Color min:  (0.000, 0.004, 0.000)
+  Color max:  (1.000, 1.000, 0.976)
+  NN distance: mean=0.110441, median=0.091608, std=0.076235, min=0.005526, max=0.699391
+
+[Step 13] Generating before/after visualization...
+  Saved: results/mesh/pointcloud_before_after.png
+
+[Step 14] Generating cleaning report...
+  Saved: results/mesh/cleaning_report.txt
+
+============================================================
+Task 3.0 Cleaning Pipeline Summary
+  Original points: 80,223
+  Final points: 60,728
+  Total removed: 19,495
+  Retention: 75.70%
+  Total time: 3.3s
+  Log file: ./results/logs/task3_0_cleaning_log.txt
+  Report file: results/mesh/cleaning_report.txt
+============================================================
+
+Output verification:
+  results/mesh/dense_cleaned.ply: EXISTS
+  results/mesh/cleaning_report.txt: EXISTS
+  results/mesh/pointcloud_before_after.png: EXISTS
+  ./results/logs/task3_0_cleaning_log.txt: EXISTS
+
+All required outputs generated successfully.

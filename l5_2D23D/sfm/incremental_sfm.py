@@ -64,7 +64,7 @@ def _try_register_image(img_name, features, verified_dict, registered_set, camer
     # PnP pose estimation
     R, t, num_pnp_inliers = estimate_pose_pnp(
         np.array(points_3d_list), np.array(points_2d_list), K,
-        min_inliers=pnp_min_inliers, reproj_error=reproj_threshold, logger=None
+        min_inliers=pnp_min_inliers, reproj_error=reproj_threshold, logger=logger
     )
 
     if R is None:

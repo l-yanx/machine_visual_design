@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V2 传统雕塑 3D 重建可视化</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { overflow: hidden; background: #1a1a2e; font-family: Arial, sans-serif; }
+    #canvas-container { width: 100vw; height: 100vh; }
+
+    #ui-panel {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: rgba(20, 20, 40, 0.9);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 16px;
+      color: #e0e0e0;
+      z-index: 100;
+      min-width: 220px;
+    }
+    #ui-panel h2 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #7ec8e3;
+    }
+    #ui-panel label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #ui-panel input[type="checkbox"] {
+      accent-color: #7ec8e3;
+      width: 16px; height: 16px;
+    }
+    #ui-panel input[type="range"] {
+      width: 100%;
+      margin: 4px 0;
+    }
+
+    #info-panel {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(20, 20, 40, 0.85);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #999;
+      font-size: 12px;
+      z-index: 100;
+      line-height: 1.6;
+    }
+    #info-panel span { color: #7ec8e3; }
+
+    #loading-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 200;
+      transition: opacity 0.5s ease;
+    }
+    #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+    #loading-overlay .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(126,200,227,0.3);
+      border-top-color: #7ec8e3;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-text { color: #7ec8e3; margin-top: 16px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div id="ui-panel">
+    <h2>V2 雕塑重建</h2>
+    <label><input type="checkbox" id="show-mesh" checked> 网格模型</label>
+    <label><input type="checkbox" id="show-dense"> 密集点云</label>
+    <label><input type="checkbox" id="show-sparse"> 稀疏点云</label>
+    <label><input type="checkbox" id="show-cameras"> 相机位姿</label>
+    <label style="margin-top:8px;">点大小: <input type="range" id="point-size" min="1" max="10" value="3"></label>
+  </div>
+
+  <div id="info-panel">
+    V2 阶段 &nbsp;|&nbsp;
+    网格: <span id="info-mesh">—</span><br>
+    密集点云: <span id="info-dense">—</span> &nbsp;|&nbsp;
+    稀疏点云: <span id="info-sparse">—</span><br>
+    已注册相机: <span id="info-cameras">—</span>
+  </div>
+
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div id="loading-text">加载中...</div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

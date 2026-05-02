@@ -73,7 +73,7 @@ def estimate_pose_pnp(points_3d, points_2d, K, min_inliers=30,
     # Sanity check: translation should be reasonable
     # Typical translations are < 10 units; reject clearly bogus values
     t_norm = np.linalg.norm(t)
-    if t_norm > 50.0:
+    if t_norm > 500.0:
         if logger:
             logger.debug(f"  PnP: rejecting bogus pose (t_norm={t_norm:.1f})")
         return None, None, 0

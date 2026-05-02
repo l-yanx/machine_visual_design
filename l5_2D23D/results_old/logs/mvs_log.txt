@@ -1,0 +1,553 @@
+2026-05-01 22:49:16 [INFO] ============================================================
+2026-05-01 22:49:16 [INFO] ZNCC-based Multi-View Stereo Pipeline
+2026-05-01 22:49:16 [INFO] ============================================================
+2026-05-01 22:49:16 [INFO] Configuration: config.yaml
+2026-05-01 22:49:16 [INFO] Sparse results dir: ./results/sparse
+2026-05-01 22:49:16 [INFO] Dense results dir: ./results/dense
+2026-05-01 22:49:16 [INFO] Image dir: data/images_resized
+2026-05-01 22:49:16 [INFO] MVS config: {'depth_percentile_max': 95, 'depth_percentile_min': 5, 'depth_samples': 48, 'patch_size': 5, 'seed_pixel_radius': 20, 'source_view_num': 3, 'stride': 2, 'zncc_threshold': 0.5}
+2026-05-01 22:49:16 [INFO] Fusion config: {'outlier_nb_neighbors': 20, 'outlier_std_ratio': 2.0, 'voxel_size': 0.02}
+2026-05-01 22:49:16 [INFO] ----------------------------------------
+2026-05-01 22:49:16 [INFO] Step 1: Reading SfM results from Task 1
+2026-05-01 22:49:16 [INFO] Reading SfM results from ./results/sparse
+2026-05-01 22:49:16 [INFO]   Read 29 registered cameras
+2026-05-01 22:49:16 [INFO]   K = [[1200.0, 0, 500.0], [0, 1200.0, 375.0], [0, 0, 1]]
+2026-05-01 22:49:16 [INFO]   Read 794 sparse 3D points
+2026-05-01 22:49:16 [INFO]   Read 794 tracks
+2026-05-01 22:49:16 [INFO] ----------------------------------------
+2026-05-01 22:49:16 [INFO] Step 2: Selecting source views using sparse point visibility
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210844_185_12.jpg (148 pts): sources = [微信图片_20260501210917_210_12.jpg:104, 微信图片_20260501210922_214_12.jpg:96, 微信图片_20260501210927_218_12.jpg:95]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210845_186_12.jpg (110 pts): sources = [微信图片_20260501210915_208_12.jpg:46, 微信图片_20260501210913_207_12.jpg:45, 微信图片_20260501210920_212_12.jpg:44]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210849_189_12.jpg (138 pts): sources = [微信图片_20260501210917_210_12.jpg:87, 微信图片_20260501210916_209_12.jpg:85, 微信图片_20260501210933_220_12.jpg:83]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210851_190_12.jpg (136 pts): sources = [微信图片_20260501210933_220_12.jpg:69, 微信图片_20260501210856_194_12.jpg:66, 微信图片_20260501210910_204_12.jpg:66]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210852_191_12.jpg (133 pts): sources = [微信图片_20260501210927_218_12.jpg:110, 微信图片_20260501210933_220_12.jpg:82, 微信图片_20260501210926_217_12.jpg:80]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210853_192_12.jpg (147 pts): sources = [微信图片_20260501210927_218_12.jpg:98, 微信图片_20260501210855_193_12.jpg:97, 微信图片_20260501210933_220_12.jpg:90]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210855_193_12.jpg (157 pts): sources = [微信图片_20260501210927_218_12.jpg:102, 微信图片_20260501210933_220_12.jpg:100, 微信图片_20260501210853_192_12.jpg:97]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210856_194_12.jpg (206 pts): sources = [微信图片_20260501210929_219_12.jpg:107, 微信图片_20260501210933_220_12.jpg:105, 微信图片_20260501210922_214_12.jpg:103]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210859_196_12.jpg (140 pts): sources = [微信图片_20260501210916_209_12.jpg:100, 微信图片_20260501210917_210_12.jpg:79, 微信图片_20260501210922_214_12.jpg:65]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210902_198_12.jpg (142 pts): sources = [微信图片_20260501210933_220_12.jpg:93, 微信图片_20260501210927_218_12.jpg:90, 微信图片_20260501210917_210_12.jpg:87]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210903_199_12.jpg (136 pts): sources = [微信图片_20260501210917_210_12.jpg:96, 微信图片_20260501210927_218_12.jpg:96, 微信图片_20260501210933_220_12.jpg:89]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210908_203_12.jpg (146 pts): sources = [微信图片_20260501210927_218_12.jpg:104, 微信图片_20260501210933_220_12.jpg:104, 微信图片_20260501210922_214_12.jpg:101]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210910_204_12.jpg (170 pts): sources = [微信图片_20260501210856_194_12.jpg:92, 微信图片_20260501210933_220_12.jpg:88, 微信图片_20260501210918_211_12.jpg:80]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210911_205_12.jpg (159 pts): sources = [微信图片_20260501210933_220_12.jpg:93, 微信图片_20260501210927_218_12.jpg:90, 微信图片_20260501210917_210_12.jpg:82]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210912_206_12.jpg (174 pts): sources = [微信图片_20260501210927_218_12.jpg:115, 微信图片_20260501210933_220_12.jpg:112, 微信图片_20260501210921_213_12.jpg:104]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210913_207_12.jpg (137 pts): sources = [微信图片_20260501210927_218_12.jpg:70, 微信图片_20260501210918_211_12.jpg:68, 微信图片_20260501210933_220_12.jpg:64]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210915_208_12.jpg (74 pts): sources = [微信图片_20260501210845_186_12.jpg:46, 微信图片_20260501210920_212_12.jpg:34, 微信图片_20260501210913_207_12.jpg:29]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210916_209_12.jpg (238 pts): sources = [微信图片_20260501210917_210_12.jpg:144, 微信图片_20260501210927_218_12.jpg:114, 微信图片_20260501210922_214_12.jpg:108]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210917_210_12.jpg (254 pts): sources = [微信图片_20260501210916_209_12.jpg:144, 微信图片_20260501210922_214_12.jpg:140, 微信图片_20260501210927_218_12.jpg:138]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210918_211_12.jpg (236 pts): sources = [微信图片_20260501210927_218_12.jpg:143, 微信图片_20260501210920_212_12.jpg:142, 微信图片_20260501210933_220_12.jpg:140]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210920_212_12.jpg (221 pts): sources = [微信图片_20260501210918_211_12.jpg:142, 微信图片_20260501210923_215_12.jpg:127, 微信图片_20260501210933_220_12.jpg:117]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210921_213_12.jpg (218 pts): sources = [微信图片_20260501210927_218_12.jpg:139, 微信图片_20260501210933_220_12.jpg:136, 微信图片_20260501210918_211_12.jpg:132]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210922_214_12.jpg (230 pts): sources = [微信图片_20260501210927_218_12.jpg:145, 微信图片_20260501210933_220_12.jpg:142, 微信图片_20260501210917_210_12.jpg:140]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210923_215_12.jpg (206 pts): sources = [微信图片_20260501210920_212_12.jpg:127, 微信图片_20260501210927_218_12.jpg:118, 微信图片_20260501210918_211_12.jpg:114]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210925_216_12.jpg (142 pts): sources = [微信图片_20260501210923_215_12.jpg:87, 微信图片_20260501210927_218_12.jpg:82, 微信图片_20260501210921_213_12.jpg:81]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210926_217_12.jpg (252 pts): sources = [微信图片_20260501210933_220_12.jpg:160, 微信图片_20260501210927_218_12.jpg:149, 微信图片_20260501210922_214_12.jpg:138]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210927_218_12.jpg (273 pts): sources = [微信图片_20260501210933_220_12.jpg:152, 微信图片_20260501210929_219_12.jpg:151, 微信图片_20260501210926_217_12.jpg:149]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210929_219_12.jpg (226 pts): sources = [微信图片_20260501210927_218_12.jpg:151, 微信图片_20260501210933_220_12.jpg:146, 微信图片_20260501210922_214_12.jpg:132]
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210933_220_12.jpg (276 pts): sources = [微信图片_20260501210926_217_12.jpg:160, 微信图片_20260501210927_218_12.jpg:152, 微信图片_20260501210929_219_12.jpg:146]
+2026-05-01 22:49:16 [INFO] Exported view pairs for 29 images to ./results/dense/view_pairs.json
+2026-05-01 22:49:16 [INFO] ----------------------------------------
+2026-05-01 22:49:16 [INFO] Step 3: Estimating depth ranges from sparse points
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210844_185_12.jpg: 794 valid depths, p5=2.761, p95=13.340, range=[2.485, 14.674]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210845_186_12.jpg: 794 valid depths, p5=3.282, p95=12.490, range=[2.954, 13.740]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210849_189_12.jpg: 794 valid depths, p5=3.136, p95=13.777, range=[2.822, 15.154]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210851_190_12.jpg: 794 valid depths, p5=3.511, p95=13.425, range=[3.160, 14.768]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210852_191_12.jpg: 790 valid depths, p5=1.940, p95=11.510, range=[1.746, 12.661]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210853_192_12.jpg: 793 valid depths, p5=2.550, p95=12.913, range=[2.295, 14.204]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210855_193_12.jpg: 793 valid depths, p5=2.545, p95=12.879, range=[2.290, 14.167]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210856_194_12.jpg: 783 valid depths, p5=1.936, p95=12.156, range=[1.742, 13.372]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210859_196_12.jpg: 794 valid depths, p5=2.577, p95=12.222, range=[2.320, 13.444]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210902_198_12.jpg: 784 valid depths, p5=1.940, p95=12.790, range=[1.746, 14.069]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210903_199_12.jpg: 789 valid depths, p5=1.467, p95=11.270, range=[1.320, 12.397]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210908_203_12.jpg: 794 valid depths, p5=2.881, p95=13.045, range=[2.593, 14.350]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210910_204_12.jpg: 793 valid depths, p5=2.497, p95=12.159, range=[2.247, 13.375]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210911_205_12.jpg: 794 valid depths, p5=2.938, p95=12.504, range=[2.644, 13.754]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210912_206_12.jpg: 792 valid depths, p5=2.307, p95=12.676, range=[2.076, 13.944]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210913_207_12.jpg: 794 valid depths, p5=2.950, p95=12.479, range=[2.655, 13.727]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210915_208_12.jpg: 794 valid depths, p5=2.837, p95=12.358, range=[2.553, 13.594]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210916_209_12.jpg: 793 valid depths, p5=2.330, p95=13.497, range=[2.097, 14.847]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210917_210_12.jpg: 791 valid depths, p5=1.837, p95=13.291, range=[1.653, 14.620]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210918_211_12.jpg: 793 valid depths, p5=2.334, p95=10.610, range=[2.100, 11.671]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210920_212_12.jpg: 793 valid depths, p5=2.448, p95=10.791, range=[2.203, 11.870]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210921_213_12.jpg: 785 valid depths, p5=1.784, p95=8.742, range=[1.606, 9.616]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210922_214_12.jpg: 781 valid depths, p5=1.727, p95=8.851, range=[1.554, 9.736]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210923_215_12.jpg: 790 valid depths, p5=1.733, p95=10.113, range=[1.560, 11.125]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210925_216_12.jpg: 791 valid depths, p5=2.011, p95=10.845, range=[1.810, 11.930]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210926_217_12.jpg: 781 valid depths, p5=1.767, p95=10.919, range=[1.590, 12.011]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210927_218_12.jpg: 771 valid depths, p5=1.822, p95=10.610, range=[1.639, 11.671]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210929_219_12.jpg: 781 valid depths, p5=1.607, p95=12.149, range=[1.446, 13.364]
+2026-05-01 22:49:16 [DEBUG]   微信图片_20260501210933_220_12.jpg: 781 valid depths, p5=1.858, p95=10.207, range=[1.672, 11.228]
+2026-05-01 22:49:16 [INFO] Depth range summary across 29 images:
+2026-05-01 22:49:16 [INFO]   min_depth: [1.320, 3.160]
+2026-05-01 22:49:16 [INFO]   max_depth: [9.616, 15.154]
+2026-05-01 22:49:16 [INFO] Exported depth ranges for 29 images to ./results/dense/depth_ranges.json
+2026-05-01 22:49:16 [INFO] ----------------------------------------
+2026-05-01 22:49:16 [INFO] Step 4: Building seed pixel masks from sparse 3D point projections
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210844_185_12.jpg: 23789 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210845_186_12.jpg: 50242 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210849_189_12.jpg: 30760 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210851_190_12.jpg: 37697 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210852_191_12.jpg: 33790 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210853_192_12.jpg: 23230 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210855_193_12.jpg: 25339 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210856_194_12.jpg: 54029 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210859_196_12.jpg: 16661 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210902_198_12.jpg: 35270 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210903_199_12.jpg: 1681 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210908_203_12.jpg: 32635 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210910_204_12.jpg: 49323 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210911_205_12.jpg: 46496 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210912_206_12.jpg: 22291 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210913_207_12.jpg: 32129 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210915_208_12.jpg: 42038 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210916_209_12.jpg: 51069 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210917_210_12.jpg: 40325 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210918_211_12.jpg: 29118 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210920_212_12.jpg: 21788 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210921_213_12.jpg: 0 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210922_214_12.jpg: 0 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210923_215_12.jpg: 16515 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210925_216_12.jpg: 6724 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210926_217_12.jpg: 65464 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210927_218_12.jpg: 50577 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210929_219_12.jpg: 42664 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO]   微信图片_20260501210933_220_12.jpg: 58963 seed pixels (radius=20)
+2026-05-01 22:49:16 [INFO] ----------------------------------------
+2026-05-01 22:49:16 [INFO] Step 5: Running plane sweep depth estimation on seed pixels
+2026-05-01 22:49:16 [INFO] Processing [1/29] 微信图片_20260501210844_185_12.jpg
+2026-05-01 22:49:16 [INFO]   Source views: ['微信图片_20260501210917_210_12.jpg', '微信图片_20260501210922_214_12.jpg', '微信图片_20260501210927_218_12.jpg']
+2026-05-01 22:49:16 [INFO]   Depth range: [2.49, 14.67]
+2026-05-01 22:49:16 [INFO]   Seed pixels in mask: 23789
+2026-05-01 22:49:17 [DEBUG]     depth 16/48: d=6.375, 1692 pixels above threshold, 1.0s
+2026-05-01 22:49:18 [DEBUG]     depth 32/48: d=10.525, 2225 pixels above threshold, 1.9s
+2026-05-01 22:49:19 [DEBUG]     depth 48/48: d=14.674, 2491 pixels above threshold, 2.9s
+2026-05-01 22:49:19 [INFO]   微信图片_20260501210844_185_12.jpg: 2491/5982 seed pixels (41.6%) above threshold, range=[2.49, 14.67], 2.9s
+2026-05-01 22:49:19 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210844_185_12_depth.npy
+2026-05-01 22:49:19 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210844_185_12_confidence.npy
+2026-05-01 22:49:19 [INFO] Processing [2/29] 微信图片_20260501210845_186_12.jpg
+2026-05-01 22:49:19 [INFO]   Source views: ['微信图片_20260501210915_208_12.jpg', '微信图片_20260501210913_207_12.jpg', '微信图片_20260501210920_212_12.jpg']
+2026-05-01 22:49:19 [INFO]   Depth range: [2.95, 13.74]
+2026-05-01 22:49:19 [INFO]   Seed pixels in mask: 50242
+2026-05-01 22:49:22 [DEBUG]     depth 16/48: d=6.396, 2785 pixels above threshold, 2.3s
+2026-05-01 22:49:24 [DEBUG]     depth 32/48: d=10.068, 3486 pixels above threshold, 4.5s
+2026-05-01 22:49:26 [DEBUG]     depth 48/48: d=13.740, 3739 pixels above threshold, 6.8s
+2026-05-01 22:49:26 [INFO]   微信图片_20260501210845_186_12.jpg: 3739/12567 seed pixels (29.8%) above threshold, range=[2.95, 13.74], 6.8s
+2026-05-01 22:49:26 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210845_186_12_depth.npy
+2026-05-01 22:49:26 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210845_186_12_confidence.npy
+2026-05-01 22:49:26 [INFO] Processing [3/29] 微信图片_20260501210849_189_12.jpg
+2026-05-01 22:49:26 [INFO]   Source views: ['微信图片_20260501210917_210_12.jpg', '微信图片_20260501210916_209_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:49:26 [INFO]   Depth range: [2.82, 15.15]
+2026-05-01 22:49:26 [INFO]   Seed pixels in mask: 30760
+2026-05-01 22:49:27 [DEBUG]     depth 16/48: d=6.758, 1214 pixels above threshold, 1.3s
+2026-05-01 22:49:29 [DEBUG]     depth 32/48: d=10.956, 1635 pixels above threshold, 2.7s
+2026-05-01 22:49:30 [DEBUG]     depth 48/48: d=15.154, 1850 pixels above threshold, 4.1s
+2026-05-01 22:49:30 [INFO]   微信图片_20260501210849_189_12.jpg: 1850/7681 seed pixels (24.1%) above threshold, range=[2.82, 15.15], 4.1s
+2026-05-01 22:49:30 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210849_189_12_depth.npy
+2026-05-01 22:49:30 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210849_189_12_confidence.npy
+2026-05-01 22:49:30 [INFO] Processing [4/29] 微信图片_20260501210851_190_12.jpg
+2026-05-01 22:49:30 [INFO]   Source views: ['微信图片_20260501210933_220_12.jpg', '微信图片_20260501210856_194_12.jpg', '微信图片_20260501210910_204_12.jpg']
+2026-05-01 22:49:30 [INFO]   Depth range: [3.16, 14.77]
+2026-05-01 22:49:30 [INFO]   Seed pixels in mask: 37697
+2026-05-01 22:49:32 [DEBUG]     depth 16/48: d=6.865, 4933 pixels above threshold, 1.3s
+2026-05-01 22:49:33 [DEBUG]     depth 32/48: d=10.816, 5764 pixels above threshold, 2.9s
+2026-05-01 22:49:35 [DEBUG]     depth 48/48: d=14.768, 5969 pixels above threshold, 4.4s
+2026-05-01 22:49:35 [INFO]   微信图片_20260501210851_190_12.jpg: 5969/9453 seed pixels (63.1%) above threshold, range=[3.16, 14.77], 4.4s
+2026-05-01 22:49:35 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210851_190_12_depth.npy
+2026-05-01 22:49:35 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210851_190_12_confidence.npy
+2026-05-01 22:49:35 [INFO] Processing [5/29] 微信图片_20260501210852_191_12.jpg
+2026-05-01 22:49:35 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210926_217_12.jpg']
+2026-05-01 22:49:35 [INFO]   Depth range: [1.75, 12.66]
+2026-05-01 22:49:35 [INFO]   Seed pixels in mask: 33790
+2026-05-01 22:49:36 [DEBUG]     depth 16/48: d=5.230, 2426 pixels above threshold, 1.5s
+2026-05-01 22:49:38 [DEBUG]     depth 32/48: d=8.945, 2911 pixels above threshold, 3.1s
+2026-05-01 22:49:39 [DEBUG]     depth 48/48: d=12.661, 3102 pixels above threshold, 4.6s
+2026-05-01 22:49:39 [INFO]   微信图片_20260501210852_191_12.jpg: 3102/8438 seed pixels (36.8%) above threshold, range=[1.75, 12.66], 4.6s
+2026-05-01 22:49:39 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210852_191_12_depth.npy
+2026-05-01 22:49:39 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210852_191_12_confidence.npy
+2026-05-01 22:49:39 [INFO] Processing [6/29] 微信图片_20260501210853_192_12.jpg
+2026-05-01 22:49:39 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210855_193_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:49:39 [INFO]   Depth range: [2.29, 14.20]
+2026-05-01 22:49:39 [INFO]   Seed pixels in mask: 23230
+2026-05-01 22:49:40 [DEBUG]     depth 16/48: d=6.096, 2218 pixels above threshold, 0.9s
+2026-05-01 22:49:41 [DEBUG]     depth 32/48: d=10.150, 2397 pixels above threshold, 1.9s
+2026-05-01 22:49:42 [DEBUG]     depth 48/48: d=14.204, 2477 pixels above threshold, 2.9s
+2026-05-01 22:49:42 [INFO]   微信图片_20260501210853_192_12.jpg: 2477/5829 seed pixels (42.5%) above threshold, range=[2.29, 14.20], 2.9s
+2026-05-01 22:49:42 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210853_192_12_depth.npy
+2026-05-01 22:49:42 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210853_192_12_confidence.npy
+2026-05-01 22:49:42 [INFO] Processing [7/29] 微信图片_20260501210855_193_12.jpg
+2026-05-01 22:49:42 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210853_192_12.jpg']
+2026-05-01 22:49:42 [INFO]   Depth range: [2.29, 14.17]
+2026-05-01 22:49:42 [INFO]   Seed pixels in mask: 25339
+2026-05-01 22:49:43 [DEBUG]     depth 16/48: d=6.081, 2543 pixels above threshold, 1.0s
+2026-05-01 22:49:45 [DEBUG]     depth 32/48: d=10.124, 2820 pixels above threshold, 2.1s
+2026-05-01 22:49:46 [DEBUG]     depth 48/48: d=14.167, 2930 pixels above threshold, 3.2s
+2026-05-01 22:49:46 [INFO]   微信图片_20260501210855_193_12.jpg: 2930/6358 seed pixels (46.1%) above threshold, range=[2.29, 14.17], 3.2s
+2026-05-01 22:49:46 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210855_193_12_depth.npy
+2026-05-01 22:49:46 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210855_193_12_confidence.npy
+2026-05-01 22:49:46 [INFO] Processing [8/29] 微信图片_20260501210856_194_12.jpg
+2026-05-01 22:49:46 [INFO]   Source views: ['微信图片_20260501210929_219_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:49:46 [INFO]   Depth range: [1.74, 13.37]
+2026-05-01 22:49:46 [INFO]   Seed pixels in mask: 54029
+2026-05-01 22:49:48 [DEBUG]     depth 16/48: d=5.454, 2775 pixels above threshold, 2.3s
+2026-05-01 22:49:50 [DEBUG]     depth 32/48: d=9.413, 3884 pixels above threshold, 4.6s
+2026-05-01 22:49:53 [DEBUG]     depth 48/48: d=13.372, 4340 pixels above threshold, 6.8s
+2026-05-01 22:49:53 [INFO]   微信图片_20260501210856_194_12.jpg: 4340/13533 seed pixels (32.1%) above threshold, range=[1.74, 13.37], 6.8s
+2026-05-01 22:49:53 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210856_194_12_depth.npy
+2026-05-01 22:49:53 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210856_194_12_confidence.npy
+2026-05-01 22:49:53 [INFO] Processing [9/29] 微信图片_20260501210859_196_12.jpg
+2026-05-01 22:49:53 [INFO]   Source views: ['微信图片_20260501210916_209_12.jpg', '微信图片_20260501210917_210_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:49:53 [INFO]   Depth range: [2.32, 13.44]
+2026-05-01 22:49:53 [INFO]   Seed pixels in mask: 16661
+2026-05-01 22:49:53 [DEBUG]     depth 16/48: d=5.870, 492 pixels above threshold, 0.3s
+2026-05-01 22:49:53 [DEBUG]     depth 32/48: d=9.657, 891 pixels above threshold, 0.6s
+2026-05-01 22:49:54 [DEBUG]     depth 48/48: d=13.444, 1202 pixels above threshold, 1.1s
+2026-05-01 22:49:54 [INFO]   微信图片_20260501210859_196_12.jpg: 1202/4196 seed pixels (28.6%) above threshold, range=[2.32, 13.44], 1.1s
+2026-05-01 22:49:54 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210859_196_12_depth.npy
+2026-05-01 22:49:54 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210859_196_12_confidence.npy
+2026-05-01 22:49:54 [INFO] Processing [10/29] 微信图片_20260501210902_198_12.jpg
+2026-05-01 22:49:54 [INFO]   Source views: ['微信图片_20260501210933_220_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210917_210_12.jpg']
+2026-05-01 22:49:54 [INFO]   Depth range: [1.75, 14.07]
+2026-05-01 22:49:54 [INFO]   Seed pixels in mask: 35270
+2026-05-01 22:49:55 [DEBUG]     depth 16/48: d=5.679, 2111 pixels above threshold, 1.4s
+2026-05-01 22:49:57 [DEBUG]     depth 32/48: d=9.874, 2765 pixels above threshold, 2.8s
+2026-05-01 22:49:58 [DEBUG]     depth 48/48: d=14.069, 3100 pixels above threshold, 4.2s
+2026-05-01 22:49:58 [INFO]   微信图片_20260501210902_198_12.jpg: 3100/8815 seed pixels (35.2%) above threshold, range=[1.75, 14.07], 4.2s
+2026-05-01 22:49:58 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210902_198_12_depth.npy
+2026-05-01 22:49:58 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210902_198_12_confidence.npy
+2026-05-01 22:49:58 [INFO] Processing [11/29] 微信图片_20260501210903_199_12.jpg
+2026-05-01 22:49:58 [INFO]   Source views: ['微信图片_20260501210917_210_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:49:58 [INFO]   Depth range: [1.32, 12.40]
+2026-05-01 22:49:58 [INFO]   Seed pixels in mask: 1681
+2026-05-01 22:49:58 [DEBUG]     depth 16/48: d=4.855, 133 pixels above threshold, 0.1s
+2026-05-01 22:49:58 [DEBUG]     depth 32/48: d=8.626, 217 pixels above threshold, 0.1s
+2026-05-01 22:49:58 [DEBUG]     depth 48/48: d=12.397, 251 pixels above threshold, 0.1s
+2026-05-01 22:49:58 [INFO]   微信图片_20260501210903_199_12.jpg: 251/420 seed pixels (59.8%) above threshold, range=[1.32, 12.40], 0.1s
+2026-05-01 22:49:58 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210903_199_12_depth.npy
+2026-05-01 22:49:58 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210903_199_12_confidence.npy
+2026-05-01 22:49:58 [INFO] Processing [12/29] 微信图片_20260501210908_203_12.jpg
+2026-05-01 22:49:58 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:49:58 [INFO]   Depth range: [2.59, 14.35]
+2026-05-01 22:49:58 [INFO]   Seed pixels in mask: 32635
+2026-05-01 22:49:59 [DEBUG]     depth 16/48: d=6.345, 1735 pixels above threshold, 1.1s
+2026-05-01 22:50:01 [DEBUG]     depth 32/48: d=10.347, 2254 pixels above threshold, 2.4s
+2026-05-01 22:50:02 [DEBUG]     depth 48/48: d=14.350, 2579 pixels above threshold, 3.8s
+2026-05-01 22:50:02 [INFO]   微信图片_20260501210908_203_12.jpg: 2579/8112 seed pixels (31.8%) above threshold, range=[2.59, 14.35], 3.8s
+2026-05-01 22:50:02 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210908_203_12_depth.npy
+2026-05-01 22:50:02 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210908_203_12_confidence.npy
+2026-05-01 22:50:02 [INFO] Processing [13/29] 微信图片_20260501210910_204_12.jpg
+2026-05-01 22:50:02 [INFO]   Source views: ['微信图片_20260501210856_194_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210918_211_12.jpg']
+2026-05-01 22:50:02 [INFO]   Depth range: [2.25, 13.37]
+2026-05-01 22:50:02 [INFO]   Seed pixels in mask: 49323
+2026-05-01 22:50:03 [DEBUG]     depth 16/48: d=5.799, 5865 pixels above threshold, 1.4s
+2026-05-01 22:50:05 [DEBUG]     depth 32/48: d=9.587, 7284 pixels above threshold, 2.9s
+2026-05-01 22:50:07 [DEBUG]     depth 48/48: d=13.375, 7773 pixels above threshold, 4.5s
+2026-05-01 22:50:07 [INFO]   微信图片_20260501210910_204_12.jpg: 7773/12380 seed pixels (62.8%) above threshold, range=[2.25, 13.37], 4.5s
+2026-05-01 22:50:07 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210910_204_12_depth.npy
+2026-05-01 22:50:07 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210910_204_12_confidence.npy
+2026-05-01 22:50:07 [INFO] Processing [14/29] 微信图片_20260501210911_205_12.jpg
+2026-05-01 22:50:07 [INFO]   Source views: ['微信图片_20260501210933_220_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210917_210_12.jpg']
+2026-05-01 22:50:07 [INFO]   Depth range: [2.64, 13.75]
+2026-05-01 22:50:07 [INFO]   Seed pixels in mask: 46496
+2026-05-01 22:50:08 [DEBUG]     depth 16/48: d=6.190, 2823 pixels above threshold, 1.3s
+2026-05-01 22:50:09 [DEBUG]     depth 32/48: d=9.972, 3990 pixels above threshold, 2.6s
+2026-05-01 22:50:11 [DEBUG]     depth 48/48: d=13.754, 5044 pixels above threshold, 4.1s
+2026-05-01 22:50:11 [INFO]   微信图片_20260501210911_205_12.jpg: 5044/11603 seed pixels (43.5%) above threshold, range=[2.64, 13.75], 4.1s
+2026-05-01 22:50:11 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210911_205_12_depth.npy
+2026-05-01 22:50:11 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210911_205_12_confidence.npy
+2026-05-01 22:50:11 [INFO] Processing [15/29] 微信图片_20260501210912_206_12.jpg
+2026-05-01 22:50:11 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210921_213_12.jpg']
+2026-05-01 22:50:11 [INFO]   Depth range: [2.08, 13.94]
+2026-05-01 22:50:11 [INFO]   Seed pixels in mask: 22291
+2026-05-01 22:50:12 [DEBUG]     depth 16/48: d=5.864, 1426 pixels above threshold, 1.0s
+2026-05-01 22:50:13 [DEBUG]     depth 32/48: d=9.904, 1843 pixels above threshold, 2.0s
+2026-05-01 22:50:14 [DEBUG]     depth 48/48: d=13.944, 2007 pixels above threshold, 3.0s
+2026-05-01 22:50:14 [INFO]   微信图片_20260501210912_206_12.jpg: 2007/5585 seed pixels (35.9%) above threshold, range=[2.08, 13.94], 3.0s
+2026-05-01 22:50:14 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210912_206_12_depth.npy
+2026-05-01 22:50:14 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210912_206_12_confidence.npy
+2026-05-01 22:50:14 [INFO] Processing [16/29] 微信图片_20260501210913_207_12.jpg
+2026-05-01 22:50:14 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210918_211_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:50:14 [INFO]   Depth range: [2.65, 13.73]
+2026-05-01 22:50:14 [INFO]   Seed pixels in mask: 32129
+2026-05-01 22:50:15 [DEBUG]     depth 16/48: d=6.189, 3440 pixels above threshold, 1.1s
+2026-05-01 22:50:16 [DEBUG]     depth 32/48: d=9.958, 4195 pixels above threshold, 2.2s
+2026-05-01 22:50:17 [DEBUG]     depth 48/48: d=13.727, 4500 pixels above threshold, 3.3s
+2026-05-01 22:50:17 [INFO]   微信图片_20260501210913_207_12.jpg: 4500/8007 seed pixels (56.2%) above threshold, range=[2.65, 13.73], 3.3s
+2026-05-01 22:50:17 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210913_207_12_depth.npy
+2026-05-01 22:50:17 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210913_207_12_confidence.npy
+2026-05-01 22:50:17 [INFO] Processing [17/29] 微信图片_20260501210915_208_12.jpg
+2026-05-01 22:50:17 [INFO]   Source views: ['微信图片_20260501210845_186_12.jpg', '微信图片_20260501210920_212_12.jpg', '微信图片_20260501210913_207_12.jpg']
+2026-05-01 22:50:17 [INFO]   Depth range: [2.55, 13.59]
+2026-05-01 22:50:17 [INFO]   Seed pixels in mask: 42038
+2026-05-01 22:50:19 [DEBUG]     depth 16/48: d=6.077, 2995 pixels above threshold, 1.9s
+2026-05-01 22:50:21 [DEBUG]     depth 32/48: d=9.836, 3890 pixels above threshold, 3.7s
+2026-05-01 22:50:23 [DEBUG]     depth 48/48: d=13.594, 4178 pixels above threshold, 5.5s
+2026-05-01 22:50:23 [INFO]   微信图片_20260501210915_208_12.jpg: 4178/10597 seed pixels (39.4%) above threshold, range=[2.55, 13.59], 5.5s
+2026-05-01 22:50:23 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210915_208_12_depth.npy
+2026-05-01 22:50:23 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210915_208_12_confidence.npy
+2026-05-01 22:50:23 [INFO] Processing [18/29] 微信图片_20260501210916_209_12.jpg
+2026-05-01 22:50:23 [INFO]   Source views: ['微信图片_20260501210917_210_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:50:23 [INFO]   Depth range: [2.10, 14.85]
+2026-05-01 22:50:23 [INFO]   Seed pixels in mask: 51069
+2026-05-01 22:50:24 [DEBUG]     depth 16/48: d=6.166, 7705 pixels above threshold, 0.8s
+2026-05-01 22:50:24 [DEBUG]     depth 32/48: d=10.507, 9356 pixels above threshold, 1.6s
+2026-05-01 22:50:25 [DEBUG]     depth 48/48: d=14.847, 9921 pixels above threshold, 2.5s
+2026-05-01 22:50:25 [INFO]   微信图片_20260501210916_209_12.jpg: 9921/12733 seed pixels (77.9%) above threshold, range=[2.10, 14.85], 2.5s
+2026-05-01 22:50:25 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210916_209_12_depth.npy
+2026-05-01 22:50:25 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210916_209_12_confidence.npy
+2026-05-01 22:50:25 [INFO] Processing [19/29] 微信图片_20260501210917_210_12.jpg
+2026-05-01 22:50:25 [INFO]   Source views: ['微信图片_20260501210916_209_12.jpg', '微信图片_20260501210922_214_12.jpg', '微信图片_20260501210927_218_12.jpg']
+2026-05-01 22:50:25 [INFO]   Depth range: [1.65, 14.62]
+2026-05-01 22:50:25 [INFO]   Seed pixels in mask: 40325
+2026-05-01 22:50:26 [DEBUG]     depth 16/48: d=5.792, 5717 pixels above threshold, 0.9s
+2026-05-01 22:50:27 [DEBUG]     depth 32/48: d=10.206, 6963 pixels above threshold, 1.7s
+2026-05-01 22:50:28 [DEBUG]     depth 48/48: d=14.620, 7319 pixels above threshold, 2.6s
+2026-05-01 22:50:28 [INFO]   微信图片_20260501210917_210_12.jpg: 7319/10055 seed pixels (72.8%) above threshold, range=[1.65, 14.62], 2.6s
+2026-05-01 22:50:28 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210917_210_12_depth.npy
+2026-05-01 22:50:28 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210917_210_12_confidence.npy
+2026-05-01 22:50:28 [INFO] Processing [20/29] 微信图片_20260501210918_211_12.jpg
+2026-05-01 22:50:28 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210920_212_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:50:28 [INFO]   Depth range: [2.10, 11.67]
+2026-05-01 22:50:28 [INFO]   Seed pixels in mask: 29118
+2026-05-01 22:50:29 [DEBUG]     depth 16/48: d=5.155, 4738 pixels above threshold, 0.6s
+2026-05-01 22:50:29 [DEBUG]     depth 32/48: d=8.413, 5196 pixels above threshold, 1.3s
+2026-05-01 22:50:30 [DEBUG]     depth 48/48: d=11.671, 5358 pixels above threshold, 2.1s
+2026-05-01 22:50:30 [INFO]   微信图片_20260501210918_211_12.jpg: 5358/7283 seed pixels (73.6%) above threshold, range=[2.10, 11.67], 2.1s
+2026-05-01 22:50:30 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210918_211_12_depth.npy
+2026-05-01 22:50:30 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210918_211_12_confidence.npy
+2026-05-01 22:50:30 [INFO] Processing [21/29] 微信图片_20260501210920_212_12.jpg
+2026-05-01 22:50:30 [INFO]   Source views: ['微信图片_20260501210918_211_12.jpg', '微信图片_20260501210923_215_12.jpg', '微信图片_20260501210933_220_12.jpg']
+2026-05-01 22:50:30 [INFO]   Depth range: [2.20, 11.87]
+2026-05-01 22:50:30 [INFO]   Seed pixels in mask: 21788
+2026-05-01 22:50:31 [DEBUG]     depth 16/48: d=5.288, 2742 pixels above threshold, 0.7s
+2026-05-01 22:50:32 [DEBUG]     depth 32/48: d=8.579, 3211 pixels above threshold, 1.5s
+2026-05-01 22:50:33 [DEBUG]     depth 48/48: d=11.870, 3417 pixels above threshold, 2.3s
+2026-05-01 22:50:33 [INFO]   微信图片_20260501210920_212_12.jpg: 3417/5428 seed pixels (63.0%) above threshold, range=[2.20, 11.87], 2.3s
+2026-05-01 22:50:33 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210920_212_12_depth.npy
+2026-05-01 22:50:33 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210920_212_12_confidence.npy
+2026-05-01 22:50:33 [INFO] Processing [22/29] 微信图片_20260501210921_213_12.jpg
+2026-05-01 22:50:33 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210918_211_12.jpg']
+2026-05-01 22:50:33 [INFO]   Depth range: [1.61, 9.62]
+2026-05-01 22:50:33 [INFO]   Seed pixels in mask: 0
+2026-05-01 22:50:33 [WARNING]   微信图片_20260501210921_213_12.jpg: No seed pixels to process
+2026-05-01 22:50:33 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210921_213_12_depth.npy
+2026-05-01 22:50:33 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210921_213_12_confidence.npy
+2026-05-01 22:50:33 [INFO] Processing [23/29] 微信图片_20260501210922_214_12.jpg
+2026-05-01 22:50:33 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210917_210_12.jpg']
+2026-05-01 22:50:33 [INFO]   Depth range: [1.55, 9.74]
+2026-05-01 22:50:33 [INFO]   Seed pixels in mask: 0
+2026-05-01 22:50:33 [WARNING]   微信图片_20260501210922_214_12.jpg: No seed pixels to process
+2026-05-01 22:50:33 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210922_214_12_depth.npy
+2026-05-01 22:50:33 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210922_214_12_confidence.npy
+2026-05-01 22:50:33 [INFO] Processing [24/29] 微信图片_20260501210923_215_12.jpg
+2026-05-01 22:50:33 [INFO]   Source views: ['微信图片_20260501210920_212_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210918_211_12.jpg']
+2026-05-01 22:50:33 [INFO]   Depth range: [1.56, 11.12]
+2026-05-01 22:50:33 [INFO]   Seed pixels in mask: 16515
+2026-05-01 22:50:33 [DEBUG]     depth 16/48: d=4.612, 1939 pixels above threshold, 0.5s
+2026-05-01 22:50:34 [DEBUG]     depth 32/48: d=7.868, 2522 pixels above threshold, 1.1s
+2026-05-01 22:50:34 [DEBUG]     depth 48/48: d=11.125, 2839 pixels above threshold, 1.6s
+2026-05-01 22:50:34 [INFO]   微信图片_20260501210923_215_12.jpg: 2839/4104 seed pixels (69.2%) above threshold, range=[1.56, 11.12], 1.6s
+2026-05-01 22:50:34 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210923_215_12_depth.npy
+2026-05-01 22:50:34 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210923_215_12_confidence.npy
+2026-05-01 22:50:34 [INFO] Processing [25/29] 微信图片_20260501210925_216_12.jpg
+2026-05-01 22:50:34 [INFO]   Source views: ['微信图片_20260501210923_215_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210921_213_12.jpg']
+2026-05-01 22:50:34 [INFO]   Depth range: [1.81, 11.93]
+2026-05-01 22:50:34 [INFO]   Seed pixels in mask: 6724
+2026-05-01 22:50:34 [DEBUG]     depth 16/48: d=5.040, 987 pixels above threshold, 0.1s
+2026-05-01 22:50:35 [DEBUG]     depth 32/48: d=8.485, 1071 pixels above threshold, 0.2s
+2026-05-01 22:50:35 [DEBUG]     depth 48/48: d=11.930, 1102 pixels above threshold, 0.4s
+2026-05-01 22:50:35 [INFO]   微信图片_20260501210925_216_12.jpg: 1102/1701 seed pixels (64.8%) above threshold, range=[1.81, 11.93], 0.4s
+2026-05-01 22:50:35 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210925_216_12_depth.npy
+2026-05-01 22:50:35 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210925_216_12_confidence.npy
+2026-05-01 22:50:35 [INFO] Processing [26/29] 微信图片_20260501210926_217_12.jpg
+2026-05-01 22:50:35 [INFO]   Source views: ['微信图片_20260501210933_220_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:50:35 [INFO]   Depth range: [1.59, 12.01]
+2026-05-01 22:50:35 [INFO]   Seed pixels in mask: 65464
+2026-05-01 22:50:38 [DEBUG]     depth 16/48: d=4.916, 4208 pixels above threshold, 2.9s
+2026-05-01 22:50:41 [DEBUG]     depth 32/48: d=8.464, 5262 pixels above threshold, 5.9s
+2026-05-01 22:50:44 [DEBUG]     depth 48/48: d=12.011, 5806 pixels above threshold, 8.8s
+2026-05-01 22:50:44 [INFO]   微信图片_20260501210926_217_12.jpg: 5806/16364 seed pixels (35.5%) above threshold, range=[1.59, 12.01], 8.8s
+2026-05-01 22:50:44 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210926_217_12_depth.npy
+2026-05-01 22:50:44 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210926_217_12_confidence.npy
+2026-05-01 22:50:44 [INFO] Processing [27/29] 微信图片_20260501210927_218_12.jpg
+2026-05-01 22:50:44 [INFO]   Source views: ['微信图片_20260501210933_220_12.jpg', '微信图片_20260501210929_219_12.jpg', '微信图片_20260501210926_217_12.jpg']
+2026-05-01 22:50:44 [INFO]   Depth range: [1.64, 11.67]
+2026-05-01 22:50:44 [INFO]   Seed pixels in mask: 50577
+2026-05-01 22:50:46 [DEBUG]     depth 16/48: d=4.841, 1793 pixels above threshold, 2.3s
+2026-05-01 22:50:48 [DEBUG]     depth 32/48: d=8.256, 2566 pixels above threshold, 4.7s
+2026-05-01 22:50:51 [DEBUG]     depth 48/48: d=11.671, 2941 pixels above threshold, 7.0s
+2026-05-01 22:50:51 [INFO]   微信图片_20260501210927_218_12.jpg: 2941/12650 seed pixels (23.2%) above threshold, range=[1.64, 11.67], 7.0s
+2026-05-01 22:50:51 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210927_218_12_depth.npy
+2026-05-01 22:50:51 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210927_218_12_confidence.npy
+2026-05-01 22:50:51 [INFO] Processing [28/29] 微信图片_20260501210929_219_12.jpg
+2026-05-01 22:50:51 [INFO]   Source views: ['微信图片_20260501210927_218_12.jpg', '微信图片_20260501210933_220_12.jpg', '微信图片_20260501210922_214_12.jpg']
+2026-05-01 22:50:51 [INFO]   Depth range: [1.45, 13.36]
+2026-05-01 22:50:51 [INFO]   Seed pixels in mask: 42664
+2026-05-01 22:50:53 [DEBUG]     depth 16/48: d=5.250, 1841 pixels above threshold, 1.7s
+2026-05-01 22:50:54 [DEBUG]     depth 32/48: d=9.307, 2738 pixels above threshold, 3.3s
+2026-05-01 22:50:56 [DEBUG]     depth 48/48: d=13.364, 3185 pixels above threshold, 4.9s
+2026-05-01 22:50:56 [INFO]   微信图片_20260501210929_219_12.jpg: 3185/10630 seed pixels (30.0%) above threshold, range=[1.45, 13.36], 4.9s
+2026-05-01 22:50:56 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210929_219_12_depth.npy
+2026-05-01 22:50:56 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210929_219_12_confidence.npy
+2026-05-01 22:50:56 [INFO] Processing [29/29] 微信图片_20260501210933_220_12.jpg
+2026-05-01 22:50:56 [INFO]   Source views: ['微信图片_20260501210926_217_12.jpg', '微信图片_20260501210927_218_12.jpg', '微信图片_20260501210929_219_12.jpg']
+2026-05-01 22:50:56 [INFO]   Depth range: [1.67, 11.23]
+2026-05-01 22:50:56 [INFO]   Seed pixels in mask: 58963
+2026-05-01 22:50:58 [DEBUG]     depth 16/48: d=4.722, 3004 pixels above threshold, 2.7s
+2026-05-01 22:51:01 [DEBUG]     depth 32/48: d=7.975, 4039 pixels above threshold, 5.4s
+2026-05-01 22:51:04 [DEBUG]     depth 48/48: d=11.228, 4601 pixels above threshold, 8.1s
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210933_220_12.jpg: 4601/14735 seed pixels (31.2%) above threshold, range=[1.67, 11.23], 8.1s
+2026-05-01 22:51:04 [INFO]     Saved depth map to ./results/dense/depth_maps/微信图片_20260501210933_220_12_depth.npy
+2026-05-01 22:51:04 [INFO]     Saved confidence map to ./results/dense/confidence_maps/微信图片_20260501210933_220_12_confidence.npy
+2026-05-01 22:51:04 [INFO] Plane sweep completed in 107.7s (1.8 min)
+2026-05-01 22:51:04 [INFO] ----------------------------------------
+2026-05-01 22:51:04 [INFO] Step 6: Filtering depth maps
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210844_185_12.jpg: 2491 -> 2491 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210845_186_12.jpg: 3739 -> 3739 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210849_189_12.jpg: 1850 -> 1850 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210851_190_12.jpg: 5969 -> 5969 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210852_191_12.jpg: 3102 -> 3102 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210853_192_12.jpg: 2477 -> 2477 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210855_193_12.jpg: 2930 -> 2930 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210856_194_12.jpg: 4340 -> 4340 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210859_196_12.jpg: 1202 -> 1202 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210902_198_12.jpg: 3100 -> 3100 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210903_199_12.jpg: 251 -> 251 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210908_203_12.jpg: 2579 -> 2579 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210910_204_12.jpg: 7773 -> 7773 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210911_205_12.jpg: 5044 -> 5044 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210912_206_12.jpg: 2007 -> 2007 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210913_207_12.jpg: 4500 -> 4500 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210915_208_12.jpg: 4178 -> 4178 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210916_209_12.jpg: 9921 -> 9921 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210917_210_12.jpg: 7319 -> 7319 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210918_211_12.jpg: 5358 -> 5358 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210920_212_12.jpg: 3417 -> 3417 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210921_213_12.jpg: 0 -> 0 valid pixels (0.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210922_214_12.jpg: 0 -> 0 valid pixels (0.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210923_215_12.jpg: 2839 -> 2839 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210925_216_12.jpg: 1102 -> 1102 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210926_217_12.jpg: 5806 -> 5806 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210927_218_12.jpg: 2941 -> 2941 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210929_219_12.jpg: 3185 -> 3185 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210933_220_12.jpg: 4601 -> 4601 valid pixels (100.0%)
+2026-05-01 22:51:04 [INFO] Total: 104021 -> 104021 valid pixels (100.0%)
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210844_185_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210845_186_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210849_189_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210851_190_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210852_191_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210853_192_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210855_193_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210856_194_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210859_196_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210902_198_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210903_199_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210908_203_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210910_204_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210911_205_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210912_206_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210913_207_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210915_208_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210916_209_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210917_210_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210918_211_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210920_212_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210921_213_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210922_214_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210923_215_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210925_216_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210926_217_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210927_218_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210929_219_12_depth_filtered.npy
+2026-05-01 22:51:04 [DEBUG]     Saved filtered depth map: ./results/dense/depth_maps_filtered/微信图片_20260501210933_220_12_depth_filtered.npy
+2026-05-01 22:51:04 [INFO] Saved 29 filtered depth maps to ./results/dense/depth_maps_filtered
+2026-05-01 22:51:04 [INFO] ----------------------------------------
+2026-05-01 22:51:04 [INFO] Step 7: Generating partial point clouds from depth maps
+2026-05-01 22:51:04 [DEBUG]     Exported 2491 points to ./results/dense/partial_pointclouds/微信图片_20260501210844_185_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210844_185_12.jpg: 2491 points -> ./results/dense/partial_pointclouds/微信图片_20260501210844_185_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 3739 points to ./results/dense/partial_pointclouds/微信图片_20260501210845_186_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210845_186_12.jpg: 3739 points -> ./results/dense/partial_pointclouds/微信图片_20260501210845_186_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 1850 points to ./results/dense/partial_pointclouds/微信图片_20260501210849_189_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210849_189_12.jpg: 1850 points -> ./results/dense/partial_pointclouds/微信图片_20260501210849_189_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 5969 points to ./results/dense/partial_pointclouds/微信图片_20260501210851_190_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210851_190_12.jpg: 5969 points -> ./results/dense/partial_pointclouds/微信图片_20260501210851_190_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 3102 points to ./results/dense/partial_pointclouds/微信图片_20260501210852_191_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210852_191_12.jpg: 3102 points -> ./results/dense/partial_pointclouds/微信图片_20260501210852_191_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 2477 points to ./results/dense/partial_pointclouds/微信图片_20260501210853_192_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210853_192_12.jpg: 2477 points -> ./results/dense/partial_pointclouds/微信图片_20260501210853_192_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 2930 points to ./results/dense/partial_pointclouds/微信图片_20260501210855_193_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210855_193_12.jpg: 2930 points -> ./results/dense/partial_pointclouds/微信图片_20260501210855_193_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 4340 points to ./results/dense/partial_pointclouds/微信图片_20260501210856_194_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210856_194_12.jpg: 4340 points -> ./results/dense/partial_pointclouds/微信图片_20260501210856_194_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 1202 points to ./results/dense/partial_pointclouds/微信图片_20260501210859_196_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210859_196_12.jpg: 1202 points -> ./results/dense/partial_pointclouds/微信图片_20260501210859_196_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 3100 points to ./results/dense/partial_pointclouds/微信图片_20260501210902_198_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210902_198_12.jpg: 3100 points -> ./results/dense/partial_pointclouds/微信图片_20260501210902_198_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 251 points to ./results/dense/partial_pointclouds/微信图片_20260501210903_199_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210903_199_12.jpg: 251 points -> ./results/dense/partial_pointclouds/微信图片_20260501210903_199_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 2579 points to ./results/dense/partial_pointclouds/微信图片_20260501210908_203_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210908_203_12.jpg: 2579 points -> ./results/dense/partial_pointclouds/微信图片_20260501210908_203_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 7773 points to ./results/dense/partial_pointclouds/微信图片_20260501210910_204_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210910_204_12.jpg: 7773 points -> ./results/dense/partial_pointclouds/微信图片_20260501210910_204_12_partial.ply
+2026-05-01 22:51:04 [DEBUG]     Exported 5044 points to ./results/dense/partial_pointclouds/微信图片_20260501210911_205_12_partial.ply
+2026-05-01 22:51:04 [INFO]   微信图片_20260501210911_205_12.jpg: 5044 points -> ./results/dense/partial_pointclouds/微信图片_20260501210911_205_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 2007 points to ./results/dense/partial_pointclouds/微信图片_20260501210912_206_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210912_206_12.jpg: 2007 points -> ./results/dense/partial_pointclouds/微信图片_20260501210912_206_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 4500 points to ./results/dense/partial_pointclouds/微信图片_20260501210913_207_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210913_207_12.jpg: 4500 points -> ./results/dense/partial_pointclouds/微信图片_20260501210913_207_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 4178 points to ./results/dense/partial_pointclouds/微信图片_20260501210915_208_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210915_208_12.jpg: 4178 points -> ./results/dense/partial_pointclouds/微信图片_20260501210915_208_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 9921 points to ./results/dense/partial_pointclouds/微信图片_20260501210916_209_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210916_209_12.jpg: 9921 points -> ./results/dense/partial_pointclouds/微信图片_20260501210916_209_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 7319 points to ./results/dense/partial_pointclouds/微信图片_20260501210917_210_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210917_210_12.jpg: 7319 points -> ./results/dense/partial_pointclouds/微信图片_20260501210917_210_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 5358 points to ./results/dense/partial_pointclouds/微信图片_20260501210918_211_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210918_211_12.jpg: 5358 points -> ./results/dense/partial_pointclouds/微信图片_20260501210918_211_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 3417 points to ./results/dense/partial_pointclouds/微信图片_20260501210920_212_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210920_212_12.jpg: 3417 points -> ./results/dense/partial_pointclouds/微信图片_20260501210920_212_12_partial.ply
+2026-05-01 22:51:05 [WARNING]   微信图片_20260501210921_213_12.jpg: No valid depth pixels, skipping
+2026-05-01 22:51:05 [WARNING]   微信图片_20260501210922_214_12.jpg: No valid depth pixels, skipping
+2026-05-01 22:51:05 [DEBUG]     Exported 2839 points to ./results/dense/partial_pointclouds/微信图片_20260501210923_215_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210923_215_12.jpg: 2839 points -> ./results/dense/partial_pointclouds/微信图片_20260501210923_215_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 1102 points to ./results/dense/partial_pointclouds/微信图片_20260501210925_216_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210925_216_12.jpg: 1102 points -> ./results/dense/partial_pointclouds/微信图片_20260501210925_216_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 5806 points to ./results/dense/partial_pointclouds/微信图片_20260501210926_217_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210926_217_12.jpg: 5806 points -> ./results/dense/partial_pointclouds/微信图片_20260501210926_217_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 2941 points to ./results/dense/partial_pointclouds/微信图片_20260501210927_218_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210927_218_12.jpg: 2941 points -> ./results/dense/partial_pointclouds/微信图片_20260501210927_218_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 3185 points to ./results/dense/partial_pointclouds/微信图片_20260501210929_219_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210929_219_12.jpg: 3185 points -> ./results/dense/partial_pointclouds/微信图片_20260501210929_219_12_partial.ply
+2026-05-01 22:51:05 [DEBUG]     Exported 4601 points to ./results/dense/partial_pointclouds/微信图片_20260501210933_220_12_partial.ply
+2026-05-01 22:51:05 [INFO]   微信图片_20260501210933_220_12.jpg: 4601 points -> ./results/dense/partial_pointclouds/微信图片_20260501210933_220_12_partial.ply
+2026-05-01 22:51:05 [INFO] Generated 27 partial point clouds with 104021 total points
+2026-05-01 22:51:05 [INFO] ----------------------------------------
+2026-05-01 22:51:05 [INFO] Step 8: Fusing partial point clouds into dense.ply
+2026-05-01 22:51:06 [INFO] Merged 104021 points from 27 partial clouds
+2026-05-01 22:51:06 [INFO]   Before voxel downsampling: 104021 points
+2026-05-01 22:51:06 [INFO]   After voxel downsampling (voxel=0.02): 84085 points
+2026-05-01 22:51:06 [INFO]   After outlier removal (nb=20, std=2.0): 80223 points
+2026-05-01 22:51:06 [INFO] Fused dense point cloud saved to ./results/dense/dense.ply
+2026-05-01 22:51:06 [INFO] Final point count: 80223
+2026-05-01 22:51:06 [INFO] ============================================================
+2026-05-01 22:51:06 [INFO] MVS Pipeline Summary
+2026-05-01 22:51:06 [INFO] ============================================================
+2026-05-01 22:51:06 [INFO] Registered images: 29
+2026-05-01 22:51:06 [INFO] Depth maps generated: 29
+2026-05-01 22:51:06 [INFO] Confidence maps generated: 29
+2026-05-01 22:51:06 [INFO] Filtered depth maps: 29
+2026-05-01 22:51:06 [INFO] Partial point clouds: 27
+2026-05-01 22:51:06 [INFO] Total valid depth pixels (raw): 104021
+2026-05-01 22:51:06 [INFO] Total valid depth pixels (filtered): 104021
+2026-05-01 22:51:06 [INFO] Total partial points: 104021
+2026-05-01 22:51:06 [INFO] Final dense.ply points: 80223
+2026-05-01 22:51:06 [INFO] Total MVS time: 107.7s (1.8 min)
+2026-05-01 22:51:06 [INFO] ----------------------------------------
+2026-05-01 22:51:06 [INFO] Output file check:
+2026-05-01 22:51:06 [INFO]   ./results/dense/view_pairs.json: EXISTS
+2026-05-01 22:51:06 [INFO]   ./results/dense/depth_ranges.json: EXISTS
+2026-05-01 22:51:06 [INFO]   ./results/dense/dense.ply: EXISTS
+2026-05-01 22:51:06 [INFO]   ./results/dense/depth_maps: 29 files
+2026-05-01 22:51:06 [INFO]   ./results/dense/confidence_maps: 29 files
+2026-05-01 22:51:06 [INFO]   ./results/dense/depth_maps_filtered: 29 files
+2026-05-01 22:51:06 [INFO]   ./results/dense/partial_pointclouds: 27 files
+2026-05-01 22:51:06 [INFO] MVS pipeline completed.

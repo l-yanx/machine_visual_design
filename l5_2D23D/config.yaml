@@ -1,6 +1,16 @@
 camera:
   fx_scale: 1.2
   use_calibrated_intrinsics: false
+mesh:
+  poisson_depth: 8
+  poisson_scale: 1.1
+  poisson_linear_fit: false
+  simplify_target_triangles: 100000
+  outlier_nb_neighbors: 20
+  outlier_std_ratio: 2.0
+  voxel_downsample: 0.005
+  keep_largest_component: true
+
 fusion:
   outlier_nb_neighbors: 20
   outlier_std_ratio: 2.0
@@ -29,8 +39,51 @@ ransac:
   essential_threshold: 1.0
   min_inliers: 50
 sfm:
-  pnp_min_inliers: 25
-  reprojection_error_threshold: 8.0
+  pnp_min_inliers: 7
+  reprojection_error_threshold: 10.0
   triangulation_min_angle: 1.0
 sift:
-  max_features: 8000
+  max_features: 12000
+
+cleaning:
+  input_dense_ply: "results/dense/dense.ply"
+  output_dir: "results/mesh"
+  output_cleaned_ply: "results/mesh/dense_cleaned.ply"
+
+  remove_nan_inf: true
+  remove_duplicate_points: true
+
+  use_color_filter: false
+  color_filter_mode: "yellow_background"
+  brightness_min: 0
+  brightness_max: 255
+
+  statistical_outlier:
+    enabled: true
+    nb_neighbors: 30
+    std_ratio: 1.5
+
+  radius_outlier:
+    enabled: true
+    radius_scale: 2.5
+    min_neighbors: 8
+
+  dbscan:
+    enabled: true
+    eps_scale: 2.5
+    min_points: 20
+    keep_largest_k: 1
+
+  voxel_downsample:
+    enabled: true
+    voxel_size: 0.02
+
+  normal_estimation:
+    enabled: true
+    radius_scale: 3.0
+    max_nn: 30
+    orient_normals: true
+
+  visualization:
+    enabled: true
+    output_projection_png: "results/mesh/pointcloud_before_after.png"
